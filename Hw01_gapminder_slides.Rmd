@@ -1,0 +1,50 @@
+---
+title: "Homework 1: Exploring Gapminder"
+author: "Penny Kahn"
+date: "9/12/2019"
+output: 
+  ioslides_presentation:
+    smaller: TRUE
+    fig_width: 6
+    fig_height: 4
+---
+
+```{r load packages, echo=FALSE}
+library(tibble)
+library(gapminder)
+library(DT)
+library(ggplot2)
+```
+
+## Intro to gapminder {.smaller}
+This is the gapminder dataset. It contains information on the demographics of different countries through time.
+```{r view}
+datatable(as_tibble(gapminder))
+```
+
+## Exploring variables
+<font size="3">We can create lists of the observations within different variables.</font>
+```{r}
+levels(gapminder$continent)
+```
+<font size="3">And find out counts of unique observations within variables. This function shows the number of entries in the dataset from each continent.</font>
+```{r}
+table(gapminder$continent)
+```
+
+## Plotting data {.smaller}
+We can also make plots to explore the dataset
+```{r}
+ggplot(gapminder, aes(x=reorder(continent, lifeExp, FUN = median), y=lifeExp))+
+  geom_boxplot()+
+  labs(y="Life Expectancy", x="Continent")
+```
+
+----
+```{r}
+ggplot(subset(gapminder, continent=="Asia"), aes(x=reorder(country, lifeExp, FUN = median), y=lifeExp))+
+  geom_boxplot()+
+  coord_flip()+
+  labs(y="Life Expectancy", x="Country")
+```
+
