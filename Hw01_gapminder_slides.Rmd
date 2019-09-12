@@ -5,6 +5,7 @@ date: "9/12/2019"
 output: 
   ioslides_presentation:
     smaller: TRUE
+    widescreen: yes
     fig_width: 6
     fig_height: 4
 ---
@@ -40,7 +41,7 @@ ggplot(gapminder, aes(x=reorder(continent, lifeExp, FUN = median), y=lifeExp))+
   labs(y="Life Expectancy", x="Continent")
 ```
 
-----
+## Plotting more data {.smaller}
 ```{r}
 ggplot(subset(gapminder, continent=="Asia"), aes(x=reorder(country, lifeExp, FUN = median), y=lifeExp))+
   geom_boxplot()+
