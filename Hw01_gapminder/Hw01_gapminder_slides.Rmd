@@ -1,13 +1,14 @@
 ---
-title: "Homework 1: Exploring Gapminder"
+title: 'Homework 1: Exploring Gapminder'
 author: "Penny Kahn"
 date: "9/12/2019"
-output: 
+output:
+  beamer_presentation: default
   ioslides_presentation:
-    smaller: TRUE
-    widescreen: yes
-    fig_width: 6
     fig_height: 4
+    fig_width: 6
+    smaller: yes
+    widescreen: yes
 ---
 
 ```{r load packages, echo=FALSE}
