@@ -4,6 +4,7 @@ author: "Penny Kahn"
 date: "9/10/2019"
 output: 
   html_document:
+    keep_md: TRUE
     toc: TRUE
     toc_float: TRUE
     theme: sandstone
