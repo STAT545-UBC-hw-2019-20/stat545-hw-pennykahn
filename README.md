@@ -12,6 +12,9 @@ I am a first-year PhD student in the Zoology department at UBC. I haven't narrow
 
 ### Homework links
 [Homework 1: Intro to markdown, html](https://stat545-ubc-hw-2019-20.github.io/stat545-hw-pennykahn/Hw01_gapminder/Hw01_gapminder.html)
+
 [Homework 1: Intro to markdown, ioslides](https://stat545-ubc-hw-2019-20.github.io/stat545-hw-pennykahn/Hw01_gapminder/Hw01_gapminder_slides.html)
+
 [Homework 2: dplyr](https://stat545-ubc-hw-2019-20.github.io/stat545-hw-pennykahn/Hw02_dplyr/Hw02_dplyr.html)
+
 [Homework 3: dplyr continued](https://stat545-ubc-hw-2019-20.github.io/stat545-hw-pennykahn/Hw03_dplyr_cont/Hw03_dplyr_cont.html)
