@@ -1,7 +1,6 @@
 ---
 title: "Hw02_dplyr"
 author: "Penny Kahn"
-date: "09/20/2019"
 output:
   html_document:
     keep_md: TRUE
