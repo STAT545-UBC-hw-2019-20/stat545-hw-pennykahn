@@ -1,0 +1,151 @@
+---
+title: 'Homework 3: dplyr and ggplot continued'
+author: "Penny Kahn"
+date: "9/26/2019"
+output: 
+  html_document:
+    keep_md: TRUE
+    theme: yeti
+---
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(gapminder))
+suppressPackageStartupMessages(library(data.table))
+suppressPackageStartupMessages(library(ggthemes))
+suppressPackageStartupMessages(library(DT))
+```
+
+# Instructions
+
+Pick three of the six tasks below, and produce:
+
+* a tibble, using dplyr as your data manipulation tool;
+* an accompanying plot of data from the tibble, using ggplot2 as your visualization tool; and
+* some dialogue about what your tables/figures show (doesn’t have to be much).
+
+## _Task Option 2_
+### Get the maximum and minimum of GDP per capita for all continents.
+```{r}
+gapminder %>%
+  group_by(continent) %>% 
+  summarize(minGDP=min(gdpPercap), maxGDP=max(gdpPercap)) %>% 
+  datatable
+```
+Wait, let's reshape that data to make it easier to graph:
+```{r}
+library(data.table)
+```
+```{r}
+wide<-gapminder %>%
+  group_by(continent) %>% 
+  summarize(minGDP=min(gdpPercap), maxGDP=max(gdpPercap))
+
+long <- melt(wide, id.vars="continent", variable.names="year")
+```
+
+I chose to do a very simple stripchart to show the differences in ranges of GDP per capita between the continents
+```{r}
+long %>% 
+  ggplot(aes(x=continent, y=value))+
+    geom_point()+
+    geom_line()+
+    labs(x="Continent", y="Range of GDP per capita")+
+    theme_bw()
+```
+
+
+
+## _Task Option 5_
+### How is life expectancy changing over time on different continents?
+
+Here I have created a new column with average life expenctancy for each continent in each year.
+```{r}
+gapminder %>% 
+  group_by(continent, year) %>% 
+  mutate(avglife = mean(lifeExp)) %>% 
+  distinct(continent, year, avglife) %>% 
+  datatable()
+```
+I guess instead of making a new column and filtering out unique observations, we can use the summarize function:
+```{r}
+gapminder %>% 
+  group_by(continent, year) %>% 
+  summarize(avglife = mean(lifeExp)) %>% 
+  datatable()
+```
+
+```{r}
+gapminder %>% 
+  group_by(continent, year) %>% 
+  summarize(avglife = mean(lifeExp)) %>% 
+  ggplot(aes(x=year, y=avglife, color=continent))+
+    geom_line()+
+    labs(x="Year", y="Average life expectancy")+
+    theme_bw()
+```
+
+I tried graphing this without the summarize function but couldn't get it to work:
+```{r}
+gapminder %>% 
+  ggplot(aes(x=year, y=lifeExp, color=continent))+
+    geom_line(aes(group=continent))+
+    labs(x="Year", y="Average life expectancy")+
+    theme_bw()
+```
+
+I feel like this should work...
+
+
+## _Task Option 6_
+### Find countries with interesting stories. Open-ended and, therefore, hard. Promising but unsuccessful attempts are encouraged. This will generate interesting questions to follow up on in class.
+
+Since we've been working with gapminder, I've noticed a huge drop in life expectancy in african countries in the early nineties. I'd like to look at that more clearly. First let's look at the countries in Africa:
+```{r}
+gapminder %>% 
+  filter(continent == "Africa") %>% 
+  ggplot(aes(x=year, y=lifeExp))+
+    geom_line(aes(group=country))+
+    theme_bw()
+```
+
+Let's zoom in on the 90s
+```{r}
+gapminder %>% 
+  filter(continent == "Africa") %>% 
+  filter(year>1985) %>% 
+  ggplot(aes(x=year, y=lifeExp))+
+    geom_line(aes(group=country))+
+    theme_bw()
+```
+
+Looks like there's a few that have more "significant" drops than others. Let's tease out just the countries that have a "big" drop at some point
+```{r}
+gapminder %>% 
+  filter(continent == "Africa") %>% 
+  mutate(lifeExp_inc = lifeExp - lag(lifeExp)) %>% 
+  filter(lifeExp_inc < -5, year !=1952) %>% 
+  datatable()
+```
+
+Now let's plot just those countries. I'm sure there's a more elegant way to do this, but for now I'll stick to what I know :)
+```{r}
+gapminder %>% 
+  filter(country=="Botswana"|country=="Lesotho"|country=="Liberia"|country=="Namibia"|country=="Rwanda"|country=="South Africa"|country=="Swaziland"|country=="Zambia"|country=="Zimbabwe") %>% 
+  ggplot(aes(x=year, y=lifeExp, color=country))+
+    geom_line(aes(group=country))+
+    theme_bw()
+```
+
+So what happened to these countries from the late 80s to now? All except Liberia are located in the southern half of Africa. I'm guessing it was the HIV/AIDS epidemic. 
+
+I would love to make a graph with the lines for all the countries in the world in black except for these 9 countries in the colors shown above. I couldn't figure it out though
+
+Here's a table to go along with it. It shows the change in life expectancy from year to year in order to highlight the big drops:
+```{r}
+gapminder %>% 
+  filter(country=="Botswana"|country=="Lesotho"|country=="Liberia"|country=="Namibia"|country=="Rwanda"|country=="South Africa"|country=="Swaziland"|country=="Zambia"|country=="Zimbabwe") %>% 
+  mutate(lifeExp_inc = lifeExp - lag(lifeExp)) %>% 
+  select(country,year,lifeExp, lifeExp_inc) %>% 
+  datatable()
+```
+
