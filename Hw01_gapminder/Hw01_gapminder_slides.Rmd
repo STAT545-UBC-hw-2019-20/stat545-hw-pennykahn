@@ -1,7 +1,6 @@
 ---
 title: 'Homework 1: Exploring Gapminder'
 author: "Penny Kahn"
-date: "9/12/2019"
 output:
   ioslides_presentation:
     fig_height: 4

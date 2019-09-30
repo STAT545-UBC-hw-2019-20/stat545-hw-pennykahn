@@ -1,7 +1,6 @@
 ---
 title: 'Homework 3: dplyr and ggplot continued'
 author: "Penny Kahn"
-date: "9/26/2019"
 output: 
   html_document:
     keep_md: TRUE
