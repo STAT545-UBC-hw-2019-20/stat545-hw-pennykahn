@@ -5,6 +5,9 @@ output:
   html_document:
     keep_md: TRUE
     theme: yeti
+    toc: TRUE
+    toc_depth: 2
+    toc_float: TRUE
 ---
 
 ```{r}
