@@ -191,7 +191,7 @@ wide4_to_long4 <- wide4 %>%
 wide4_to_long4 %>% datatable()
 ```
 
-#Exercise 3: Table Joins (30%)
+#Exercise 3: Table Joins
 
 ```{r}
 guest <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/attend.csv")
