@@ -50,12 +50,16 @@ _Graphing the life expectancies of two countries against each other in this way 
 ```{r}
 wide %>% 
   ggplot(aes(x=Japan, y=Germany))+
-    geom_point()
+    geom_point()+
+    theme_bw()+
+    labs(x="Japan life expectancy", y="Germany life expectancy")
 ```
 ```{r}
 wide %>% 
   ggplot(aes(x=Rwanda, y=Germany))+
-    geom_point()
+    geom_point()+
+    theme_bw()+
+    labs(x="Rwanda life expectancy", y="Germany life expectancy")
 ```
 
 3. Re-lengthen the data
@@ -98,7 +102,9 @@ _With the data in this format, we can do a very simple ggplot to view the life e
 wide2 %>% 
   ggplot(aes(x=year, y=Africa))+
     geom_point()+
-    geom_line()
+    geom_line()+
+    theme_bw()+
+    labs(x="Year", y="Average life expectancy in Africa")
 ```
 
 3. Re-lengthen the data.
