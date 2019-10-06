@@ -27,8 +27,7 @@ Pick three of the six tasks below, and produce:
 ```{r}
 gapminder %>%
   group_by(continent) %>% 
-  summarize(minGDP=min(gdpPercap), maxGDP=max(gdpPercap)) %>% 
-  datatable
+  summarize(minGDP=min(gdpPercap), maxGDP=max(gdpPercap))
 ```
 Wait, let's reshape that data to make it easier to graph:
 ```{r}

@@ -1,0 +1,221 @@
+---
+title: 'Homework 4: Tidy data and joins'
+author: "Penny Kahn"
+output: 
+  html_document:
+    keep_md: TRUE
+    theme: yeti
+---
+
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(gapminder))
+suppressPackageStartupMessages(library(DT))
+```
+
+#Exercise 1: Univariate Data Reshaping
+You are expected to use pivot_wider() and pivot_longer() for reshaping, and ggplot2 for the plot.
+
+##Univariate Option 1
+_First let's remind ourselves of the structure of the gapminder dataset_
+```{r}
+head(gapminder)
+```
+
+## 1. Make a tibble with one row per year, and columns for life expectancy for two or more countries.
+
+_Okay, so first I'm going to select columns country, year, and life expectancy. Then I'll filter the rows to one country of my choice from each continent. This will be the tibble I pipe into pivot_wider()_
+
+```{r}
+long <- gapminder %>%
+  select(country, year, lifeExp) %>% 
+  filter(country %in% c("Germany", "Rwanda", "Japan", "Bolivia", "New Zealand"))
+
+long %>% datatable()
+```
+
+_Now we can widen my "long" tibble_
+```{r}
+wide <- long %>% 
+  pivot_wider(id_cols = year,
+              names_from = country,
+              values_from = lifeExp)
+
+wide %>% datatable()
+```
+
+2. Take advantage of this new data shape to scatterplot life expectancy for one country against that of another.
+
+_Graphing the life expectancies of two countries against each other in this way allows us to compare their relative patterns over time. For example, We can see that Japan and Germany have both had steady increases in life expectancy over time which creates a positive linear relationship. Whereas, Germany and Rwanda have had quite different trajectories in life expectancy as there seems to be no linear relationship._
+```{r}
+wide %>% 
+  ggplot(aes(x=Japan, y=Germany))+
+    geom_point()
+```
+```{r}
+wide %>% 
+  ggplot(aes(x=Rwanda, y=Germany))+
+    geom_point()
+```
+
+3. Re-lengthen the data
+```{r}
+wide_to_long <- wide %>% 
+  pivot_longer(cols = -year,
+               names_to = "country",
+               values_to = "lifeExp")
+
+wide_to_long %>% datatable()
+```
+
+##Univariate Option 2
+_I have time, so I'm going to do this option as well for the practice._
+
+1. Compute some measure of life expectancy (mean? median? min? max?) for all possible combinations of continent and year. Reshape that to have one row per year and one variable for each continent. Or the other way around: one row per continent and one variable per year.
+```{r}
+head(gapminder)
+```
+```{r}
+long2 <- gapminder %>%
+  group_by(continent, year) %>% 
+  summarise(avg_life = mean(lifeExp))
+
+long2 %>% datatable()
+```
+```{r}
+wide2 <- long2 %>% 
+  pivot_wider(id_cols = year,
+              names_from = continent,
+              values_from = avg_life)
+
+wide2 %>% datatable()
+```
+
+2. Is there a plot that is easier to make with the data in this shape versus the usual form? Try making such a plot!
+
+_With the data in this format, we can do a very simple ggplot to view the life expectancy patterns without having to filter or wrangle the data at all._
+```{r}
+wide2 %>% 
+  ggplot(aes(x=year, y=Africa))+
+    geom_point()+
+    geom_line()
+```
+
+3. Re-lengthen the data.
+```{r}
+wide2_to_long2 <- wide2 %>% 
+  pivot_longer(cols = -year,
+               names_to = "continent",
+               values_to = "avg_life")
+
+wide2_to_long2 %>% datatable()
+```
+
+#Exercise 2: Multivariate Data Reshaping
+
+Don’t worry about producing a plot here. You are expected to use pivot_wider() and pivot_longer() for reshaping.
+
+## Multivariate Option 1
+1. Make a tibble with one row per year, and columns for life expectancy and GDP per capita (or two other numeric variables) for two or more countries.
+
+_I would like to put the country before the other variable in the name, but I can't figure out how to do that._
+```{r}
+wide3 <- gapminder %>% 
+  select(country, year, lifeExp, gdpPercap) %>% 
+  filter(country %in% c("Vietnam", "Chad", "Serbia")) %>% 
+  pivot_wider(id_cols = year,
+              names_from = country,
+              names_sep = "_",
+              values_from = c(lifeExp, gdpPercap))
+
+wide3 %>% datatable()
+```
+
+2. Re-lengthen the data.
+```{r}
+wide3_to_long3 <- wide3 %>%
+  pivot_longer(cols = -year,
+               names_to = c(".value", "country"),
+               names_sep = "_")
+
+wide3_to_long3 %>% datatable()
+```
+
+## Multivariate Option 2
+1. Compute some measure of life expectancy and GDP per capita (or two other numeric variables) (mean? median? min? max?) for all possible combinations of continent and year. Reshape that to have one row per year and one variable for each continent-measurement combination. Or the other way around: one row per continent and one variable for each year-measurement combination.
+```{r}
+long4 <- gapminder %>% 
+  group_by(continent, year) %>% 
+  summarise(avgLife = mean(lifeExp), avgGDP = mean(gdpPercap))
+
+long4 %>% datatable()
+```
+```{r}
+wide4 <- long4 %>% 
+  pivot_wider(id_cols = continent,
+              names_from = year,
+              names_sep = "_",
+              values_from = c(avgLife, avgGDP))
+
+wide4 %>% datatable()
+```
+
+2. Re-lengthen the data.
+```{r}
+wide4_to_long4 <- wide4 %>%
+  pivot_longer(cols = -continent,
+               names_to = c(".value", "year"),
+               names_sep = "_")
+
+wide4_to_long4 %>% datatable()
+```
+
+#Exercise 3: Table Joins (30%)
+Do *ALL* of the activities in this section.
+
+Read in the made-up wedding guestlist and email addresses using the following lines
+
+```{r}
+guest <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/attend.csv")
+email <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/emails.csv")
+```
+
+Then, complete the following tasks using the tidyverse (tidyr, dplyr, …). No need to do any pivoting – feel free to leave guest in its current format.
+
+_Let's look at the guest and email datasets_
+```{r}
+head(guest)
+head(email)
+```
+
+
+### 3.1
+For each guest in the guestlist (guest tibble), add a column for email address, which can be found in the email tibble.
+```{r}
+email %>% 
+  rename(name = guest) %>% 
+  separate_rows(name, sep = ", ") %>% 
+  right_join(guest, by = "name") %>% 
+  datatable()
+```
+
+### 3.2
+Who do we have emails for, yet are not on the guestlist?
+```{r}
+email %>% 
+  rename(name = guest) %>% 
+  separate_rows(name, sep = ", ") %>%
+  anti_join(guest, by = "name") %>% 
+  datatable()
+```
+
+###3.3
+Make a guestlist that includes everyone we have emails for (in addition to those on the original guestlist).
+```{r}
+email %>% 
+  rename(name = guest) %>% 
+  separate_rows(name, sep = ", ") %>%
+  full_join(guest, by = "name") %>% 
+  arrange(email) %>% 
+  datatable()
+```
