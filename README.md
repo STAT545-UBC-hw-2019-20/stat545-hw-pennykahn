@@ -18,3 +18,5 @@ I am a first-year PhD student in the Zoology department at UBC. I haven't narrow
 [Homework 2: dplyr](https://stat545-ubc-hw-2019-20.github.io/stat545-hw-pennykahn/Hw02_dplyr/Hw02_dplyr.html)
 
 [Homework 3: dplyr continued](https://stat545-ubc-hw-2019-20.github.io/stat545-hw-pennykahn/Hw03_dplyr_cont/Hw03_dplyr_cont.html)
+
+[Homework 4: Tidy data and joins](https://stat545-ubc-hw-2019-20.github.io/stat545-hw-pennykahn/Hw04_pivotjoins/Hw04_pivotjoins.html)
