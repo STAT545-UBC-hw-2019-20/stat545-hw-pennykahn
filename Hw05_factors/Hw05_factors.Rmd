@@ -4,6 +4,8 @@ author: "Penny Kahn"
 output: 
   html_document:
     keep_md: TRUE
+    toc: TRUE
+    toc_float: TRUE
 ---
 
 ```{r setup, include=FALSE}
@@ -215,7 +217,7 @@ ggsave("plotC.png", plot = p3)
 ggsave("improved_plot.png", width = 18, height = 6, units = "in", plot = improved_plot)
 ```
 
-### Embedded image that I just saved
+### Embedded images from ggsave()
 
 ![](plotA.png)
 ![](plotB.png)

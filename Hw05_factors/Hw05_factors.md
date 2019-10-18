@@ -4,6 +4,8 @@ author: "Penny Kahn"
 output: 
   html_document:
     keep_md: TRUE
+    toc: TRUE
+    toc_float: TRUE
 ---
 
 
@@ -212,8 +214,8 @@ mydata %>%
   datatable()
 ```
 
-<!--html_preserve--><div id="htmlwidget-216126b8229545a99bf5" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-216126b8229545a99bf5">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],["Albania","Austria","Belgium","Bosnia and Herzegovina","Bulgaria","Croatia","Czech Republic","Denmark","Finland","France","Germany","Greece","Hungary","Iceland","Ireland","Italy","Montenegro","Netherlands","Norway","Poland","Portugal","Romania","Serbia","Slovak Republic","Slovenia","Spain","Sweden","Switzerland","Turkey","United Kingdom"],[55.23,66.8,68,53.82,59.6,61.21,66.87,70.78,66.55,67.41,67.5,65.86,64.03,72.49,66.91,65.94,59.164,72.13,72.67,61.31,59.82,61.05,57.996,64.36,65.57,64.94,71.86,69.62,43.585,69.18],[68.4329166666667,73.10325,73.64175,67.7078333333333,69.74375,70.0559166666667,71.5105,74.3701666666667,72.9919166666667,74.3489166666667,73.4444166666667,73.7331666666667,69.3931666666667,76.5114166666667,73.01725,74.0138333333333,70.2991666666667,75.6485,75.843,70.1769166666667,70.4198333333333,68.2906666666667,68.551,70.6960833333333,71.60075,74.2034166666667,76.177,75.5650833333333,59.6964166666667,73.9225833333333],[76.423,79.829,79.441,74.852,73.005,75.748,76.486,78.332,79.313,80.657,79.406,79.483,73.338,81.757,78.885,80.546,75.445,79.762,80.196,75.563,78.098,72.476,74.002,74.663,77.926,80.941,80.884,81.701,71.777,79.425]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>country<\/th>\n      <th>min_life<\/th>\n      <th>avg_life<\/th>\n      <th>max_life<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-aa929718aa5aba6e48b0" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-aa929718aa5aba6e48b0">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],["Albania","Austria","Belgium","Bosnia and Herzegovina","Bulgaria","Croatia","Czech Republic","Denmark","Finland","France","Germany","Greece","Hungary","Iceland","Ireland","Italy","Montenegro","Netherlands","Norway","Poland","Portugal","Romania","Serbia","Slovak Republic","Slovenia","Spain","Sweden","Switzerland","Turkey","United Kingdom"],[55.23,66.8,68,53.82,59.6,61.21,66.87,70.78,66.55,67.41,67.5,65.86,64.03,72.49,66.91,65.94,59.164,72.13,72.67,61.31,59.82,61.05,57.996,64.36,65.57,64.94,71.86,69.62,43.585,69.18],[68.4329166666667,73.10325,73.64175,67.7078333333333,69.74375,70.0559166666667,71.5105,74.3701666666667,72.9919166666667,74.3489166666667,73.4444166666667,73.7331666666667,69.3931666666667,76.5114166666667,73.01725,74.0138333333333,70.2991666666667,75.6485,75.843,70.1769166666667,70.4198333333333,68.2906666666667,68.551,70.6960833333333,71.60075,74.2034166666667,76.177,75.5650833333333,59.6964166666667,73.9225833333333],[76.423,79.829,79.441,74.852,73.005,75.748,76.486,78.332,79.313,80.657,79.406,79.483,73.338,81.757,78.885,80.546,75.445,79.762,80.196,75.563,78.098,72.476,74.002,74.663,77.926,80.941,80.884,81.701,71.777,79.425]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>country<\/th>\n      <th>min_life<\/th>\n      <th>avg_life<\/th>\n      <th>max_life<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
 
 _I'm going to write this dataset to a csv using the here::here() function._ 
 
@@ -340,7 +342,7 @@ ggsave("plotC.png", plot = p3)
 ggsave("improved_plot.png", width = 18, height = 6, units = "in", plot = improved_plot)
 ```
 
-### Embedded image that I just saved
+### Embedded images from ggsave()
 
 ![](plotA.png)
 ![](plotB.png)
